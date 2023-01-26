@@ -1,11 +1,11 @@
-using Console_TesteUnidas.Business.StringShuffle;
-using Console_TesteUnidas.Business.StringShuffle.Interface;
 using NSubstitute;
+using TesteUnidas.Business.StringShuffle;
+using TesteUnidas.Business.StringShuffle.Interface;
 
 namespace Solution_TestUnidasTest.Tests
 {
     [TestClass]
-    public class ShuffleString_NSubtitleTest
+    public class ShuffleString_NSubistituteTest
     {
         private IShuffleString _shuffleString;
         private IReverseString _reverseString;
@@ -14,7 +14,7 @@ namespace Solution_TestUnidasTest.Tests
         public void TestInitialize()
         {
             //--------------------------------------------------------------------------------------
-            // Este exemplo usa a Lib NSubtitle para carregar as classes com injeção de dependencia
+            // Este exemplo usa a Lib NSubistitute para carregar as classes com injeção de dependencia
             // E simular classes injetadas na rotina principal
             //--------------------------------------------------------------------------------------
             //Conceito:
@@ -33,6 +33,8 @@ namespace Solution_TestUnidasTest.Tests
         }
 
         [TestMethod]
+        [Owner("Hal")]
+        [Description("Teste usando NSubstitute")]
         public void Shuffle_WhenCalled_ReturnsExpectedString()
         {
             // Arrange

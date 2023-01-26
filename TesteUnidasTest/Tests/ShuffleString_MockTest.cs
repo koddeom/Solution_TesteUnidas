@@ -1,5 +1,5 @@
-using Console_TesteUnidas.Business.StringShuffle;
-using Console_TesteUnidas.Business.StringShuffle.Interface;
+using TesteUnidas.Business.StringShuffle;
+using TesteUnidas.Business.StringShuffle.Interface;
 using Moq;
 
 namespace Solution_TestUnidasTest.Tests
@@ -33,6 +33,8 @@ namespace Solution_TestUnidasTest.Tests
         }
 
         [TestMethod]
+        [Owner("Hal")]
+        [Description("Teste usando Mock")]
         public void Shuffle_WhenCalled_ReturnsExpectedString()
         {
             // Arrange
