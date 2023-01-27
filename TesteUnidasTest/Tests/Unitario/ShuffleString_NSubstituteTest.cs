@@ -1,20 +1,22 @@
+using NSubstitute;
 using TesteUnidas.Business.StringShuffle;
 using TesteUnidas.Business.StringShuffle.Interface;
-using Moq;
 
-namespace Solution_TestUnidasTest.Tests
+namespace TestUnidasTest.Tests.Unitario
 {
     [TestClass]
-    public class ShuffleString_MockTest
+    public class ShuffleString_NSubistituteTest
     {
-        private ShuffleString _shuffleString;
-        private Mock<IReverseString> _mockReverseString;
+        public TestContext TestContext { get; set; }
+        
+        private IShuffleString _shuffleString;
+        private IReverseString _reverseString;
 
         [TestInitialize]
         public void TestInitialize()
         {
             //--------------------------------------------------------------------------------------
-            // Este exemplo usa a Lib Mock para carregar as classes com injeção de dependencia
+            // Este exemplo usa a Lib NSubistitute para carregar as classes com injeção de dependencia
             // E simular classes injetadas na rotina principal
             //--------------------------------------------------------------------------------------
             //Conceito:
@@ -28,25 +30,25 @@ namespace Solution_TestUnidasTest.Tests
             //--------------------------------------------------------------------------------------
 
             //Uma simulação de iReverseString Injetada é criada
-            _mockReverseString = new Mock<IReverseString>();
-            _shuffleString = new ShuffleString(_mockReverseString.Object);
+            _reverseString = Substitute.For<IReverseString>();
+            _shuffleString = new ShuffleString(_reverseString);
         }
 
         [TestMethod]
         [Owner("Hal")]
-        [Description("Teste usando Mock")]
+        [Description("Teste usando NSubstitute")]
         public void Shuffle_WhenCalled_ReturnsExpectedString()
         {
             // Arrange
             var originalText = "HELLOWORLD";
+            var expectedText = "D HEL WOL ORL";
             var chunkSize = 3;
 
             //O retorno esperado da Injeção original de iReverseString é simulado aqui.
-            _mockReverseString.Setup(x => x.Reverse("HEL")).Returns("LEH");
-            _mockReverseString.Setup(x => x.Reverse("LOW")).Returns("WOL");
-            _mockReverseString.Setup(x => x.Reverse("ORD")).Returns("DRO");
-            _mockReverseString.Setup(x => x.Reverse("D")).Returns("D");
-
+            _reverseString.Reverse(Arg.Any<string>())
+                                      .Returns(x => new string(x.Arg<string>()
+                                                                .Reverse()
+                                                                .ToArray()));
             // Act
 
             //A Rotina que será efetivamente testada é chamada aqui e utilizará a versão simulada
@@ -54,7 +56,8 @@ namespace Solution_TestUnidasTest.Tests
             var result = _shuffleString.Shuffle(originalText, chunkSize);
 
             // Assert
-            Assert.AreEqual("D HEL WOL ORL", result);
+            Assert.AreEqual(expectedText, result);
+            TestContext.WriteLine($"Input: {originalText} |  Expected: {expectedText} | Result: {result} ");
         }
     }
 }

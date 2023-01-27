@@ -2,7 +2,7 @@
 
 namespace TesteUnidas.Business.StringShuffle
 {
-    internal class ReverseString : IReverseString
+    public class ReverseString : IReverseString
     {
         public string Reverse(string splitedText)
         {
